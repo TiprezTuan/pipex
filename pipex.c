@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 05:07:31 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/01 16:01:51 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/02 15:03:21 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,24 @@ int main(int argc, char const *argv[])
 		return (EXIT_FAILURE);
 	}
 
+	int	*pipefd = malloc(sizeof(int) * 2);
+
+	pipe(pipefd);
+
 	pid_t pid = fork();
 	
 	if (pid == 0)
 	{
+		close(pipefd[0]);
+		write(pipefd[1], "test", 5);
+		sleep(5);
+		write(pipefd[1], "test2", 6);
 		dup2(input_fd, 0);
-		char *catargv[] = {"cat", NULL, NULL};
-		execve("/bin/cat", catargv, NULL); // L'enfant s'arrete ici (Le programme est remplace par celui lance par execve)
+		char *catargv[] = {"e", NULL, NULL};
+		execve("/bin/cat", catargv, NULL); 
 		perror("execve");
 		return (EXIT_FAILURE);
 	}
-	wait(NULL); // attend que l'enfant ai fini
 
 	output_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
