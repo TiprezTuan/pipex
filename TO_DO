@@ -1,4 +1,4 @@
 1. Ecrire le contenu de file1 dans stdin : Verifier l'accees de lecture a file1
 2. Executer l'action cmd1 depuis un enfant du processus et ecrire les actions dans la sortie d'ecriture de pipefd
-3. Executer l'action cmd2 a partir de ce qu'a fais cm1 pr le moment en utilsant la sortie de lecture de pipefd -> Si cmd2 fini alors on arrete la
+3. Executer l'action cmd2 a partir de ce qu'a fais cmd1 pr le moment en utilsant la sortie de lecture de pipefd -> Si cmd2 fini alors on arrete la
 4. Ecrire le resultat dans file2 : Verifier l'accees d'ecriture de output_fd
