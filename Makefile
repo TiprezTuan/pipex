@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 17:58:06 by ttiprez           #+#    #+#              #
-#    Updated: 2025/11/30 05:07:19 by ttiprez          ###   ########.fr        #
+#    Updated: 2025/12/03 02:33:32 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ MAKEFLAGS += -s
 
 # Compilateur et flags
 CC			= cc
-FLAGS		= -Wall -Wextra -Werror -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
+CFLAGS		= -Wall -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
 
 # Nom de l'executable
 NAME		= pipex
@@ -50,10 +50,7 @@ $(PRINTF):
 
 # Creer l'executable
 $(NAME): $(PRINTF) $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) $(PRINTF) -o $(NAME) && echo "$(GREEN)[OK] Compilation réussie, exécutable créé$(RESET)" || (echo "$(RED)[FAIL] Compilation échouée$(RESET)"; exit 1)
-
-%.o: %.c $(HEADERS)
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(OBJS) $(PRINTF) -o $(NAME) && echo "$(GREEN)[OK] Compilation réussie, exécutable créé$(RESET)" || (echo "$(RED)[FAIL] Compilation échouée$(RESET)"; exit 1)
 
 clean:
 	@rm -f $(OBJS)
