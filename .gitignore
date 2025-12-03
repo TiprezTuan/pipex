@@ -1,4 +1,5 @@
 *.o
+*.a
 pipex
 test
 test1
