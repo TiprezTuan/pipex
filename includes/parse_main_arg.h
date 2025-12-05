@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   parse_main_arg.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/30 05:07:38 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 00:25:16 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/04 10:53:01 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/04 10:53:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PARSE_MAIN_ARG_H
+# define PARSE_MAIN_ARG_H
 
-#include <stdbool.h>
-
-bool	write_pipe_in_fd(char *filename, int pipefd[2]);
-bool	child2_action(char **argv, int pipefd[2]);
-void	first_child_action(int *pipefd, char *patch, char **argv, char **envp);
+char	*find_path(char **envp);
 
 #endif

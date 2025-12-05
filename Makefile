@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 17:58:06 by ttiprez           #+#    #+#              #
-#    Updated: 2025/12/03 02:33:32 by ttiprez          ###   ########.fr        #
+#    Updated: 2025/12/05 01:16:22 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,18 @@ MAKEFLAGS += -s
 
 # Compilateur et flags
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
+CFLAGS		= -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
 
 # Nom de l'executable
 NAME		= pipex
 
 # Fichiers sources & objets
-SRCS		= pipex.c
+SRCS		= main.c pipex.c parse_main_arg.c error_behaviors.c command.c ft_quotes_respected_split.c ft_quotes_respected_split_utils.c
 OBJS		= $(SRCS:.c=.o)
 
 # Headers
 HEADERS_DIR	= includes
-HEADERS		= $(HEADERS_DIR)/pipex.h
+HEADERS		= $(HEADERS_DIR)/pipex.h $(HEADERS_DIR)/parse_main_arg.h $(HEADERS_DIR)/error_behaviors.h $(HEADERS_DIR)/command.h $(HEADERS_DIR)/ft_quotes_respected_split.h
 
 # ft_printf
 PRINTF_DIR	= ft_printf

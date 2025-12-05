@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   error_behaviors.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/30 05:07:38 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 00:25:16 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/04 10:55:21 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 00:32:58 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef ERROR_BEHAVIORS_H
+# define ERROR_BEHAVIORS_H
 
-#include <stdbool.h>
-
-bool	write_pipe_in_fd(char *filename, int pipefd[2]);
-bool	child2_action(char **argv, int pipefd[2]);
-void	first_child_action(int *pipefd, char *patch, char **argv, char **envp);
+void	free_split(char **split);
+int		print_error_and_exit(char *msg);
+void	perror_exit(char *perror_msg);
+void	free_split_and_exit(char **split_to_free);
 
 #endif
