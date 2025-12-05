@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:26:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 17:14:46 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 17:40:45 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ pid_t	last_child_action(int *pipe_in, int ac, char **argv, char **envp)
 	if (child == 0)
 	{
 		path = find_path(envp);
-		output_fd = open(argv[ac + 1], O_WRONLY | O_CREAT | O_TRUNC);
+		output_fd = open(argv[ac + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (output_fd == -1)
 			perror_exit(argv[ac + 1]);
 		dup2(pipe_in[0], STDIN_FILENO);
