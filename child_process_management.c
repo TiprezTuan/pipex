@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:26:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 13:18:14 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 17:14:46 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
+#include <sys/wait.h>
+
+void	wait_all(pid_t last_pid)
+{
+	waitpid(last_pid, 0, 0);
+	while (wait(NULL) > 0)
+		;
+}
 
 void	first_child_action(int *pipefd, char **argv, char **envp)
 {
@@ -43,7 +51,7 @@ void	first_child_action(int *pipefd, char **argv, char **envp)
 	}
 }
 
-pid_t	next_childs_action(int *pipefd, char *cmd, char **envp)
+pid_t	mid_child_action(int *pipe_in, int *pipe_out, char *cmd, char **envp)
 {
 	pid_t	child;
 	char	**splitted_cmd;
@@ -56,17 +64,21 @@ pid_t	next_childs_action(int *pipefd, char *cmd, char **envp)
 	if (child == 0)
 	{
 		path = find_path(envp);
-		dup2(pipefd[0], STDIN_FILENO);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[0]);
-		close(pipefd[1]);
+		dup2(pipe_in[0], STDIN_FILENO);
+		dup2(pipe_out[1], STDOUT_FILENO);
+		close(pipe_in[0]);
+		close(pipe_in[1]);
+		close(pipe_out[0]);
+		close(pipe_out[1]);
 		cmd_path = find_cmd_path(ft_split(cmd, ' '), ft_split(path, ':'));
 		command(cmd_path, cmd, envp);
 	}
+	else
+		return (close_pipe(&pipe_in), close_pipe(&pipe_out), child);
 	return (child);
 }
 
-void	last_child_action(int argc, char **argv, char **envp)
+pid_t	last_child_action(int *pipe_in, int ac, char **argv, char **envp)
 {
 	pid_t	child;
 	char	**splitted_cmd;
@@ -80,12 +92,16 @@ void	last_child_action(int argc, char **argv, char **envp)
 	if (child == 0)
 	{
 		path = find_path(envp);
-		output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC);
+		output_fd = open(argv[ac + 1], O_WRONLY | O_CREAT | O_TRUNC);
 		if (output_fd == -1)
-			perror_exit(argv[1]);
-		dup2(STDOUT_FILENO, output_fd);
+			perror_exit(argv[ac + 1]);
+		dup2(pipe_in[0], STDIN_FILENO);
+		dup2(output_fd, STDOUT_FILENO);
+		close(pipe_in[0]);
+		close(pipe_in[1]);
 		close(output_fd);
-		cmd_path = find_cmd_path(ft_split(argv[2], ' '), ft_split(path, ':'));
-		command(cmd_path, argv[2], envp);
+		cmd_path = find_cmd_path(ft_split(argv[ac], ' '), ft_split(path, ':'));
+		command(cmd_path, argv[ac], envp);
 	}
+	return (child);
 }

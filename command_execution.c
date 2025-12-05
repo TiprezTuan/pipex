@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 13:20:10 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 17:15:06 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*find_cmd_path(char **cmdargv, char **splitted_path)
 	return (NULL);
 }
 
+#include "ft_printf.h"
+
 void	command(char *cmd_path, char *cmd, char **envp)
 {
 	char	**splitted_cmd;
@@ -56,7 +58,7 @@ void	command(char *cmd_path, char *cmd, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	execve(cmd_path, splitted_cmd, envp);
-	perror(cmd_path);
-	free (cmd_path);
+	perror(splitted_cmd[0]);
+	free(cmd_path);
 	free_split_and_exit(splitted_cmd);
 }

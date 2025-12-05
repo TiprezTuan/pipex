@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 13:21:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 13:28:17 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 16:53:03 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,31 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	pid_t	last_pid;
 	char	*path;
 	int		i_cmd;
-	int		i_pipe;
-	int		**pipefd_2d;
+	int		i;
+	int		**pipes;
 
-	init_pipes(&pipefd_2d, argc - 3 - 1);
+	init_pipes(&pipes, ac - 3 - 1);
 	path = find_path(envp);
-	if (argc < 5)
+	if (ac < 5)
 		print_error_and_exit("Wrong numbers of arguments(Minimum 5)\n");
-	if (access(argv[0], R_OK) == -1)
-		return (perror(argv[0]), EXIT_FAILURE);
-	first_child_action(pipefd_2d[0], argv, envp);
+	if (access(av[0], R_OK) == -1)
+		return (perror(av[0]), EXIT_FAILURE);
+	first_child_action(pipes[0], av, envp);
 	i_cmd = 3;
-	i_pipe = 0;
-	while (++i_cmd < argc)
-		last_pid = next_childs_action(pipefd_2d[i_pipe++], argv[i_cmd], envp);
-	waitpid(last_pid, 0, 0);
-	last_child_action(argc, argv, envp);
-	close_pipes(&pipefd_2d, i_pipe, -1);
+	i = 0;
+	while (i_cmd < ac - 2)
+	{
+		last_pid = mid_child_action(pipes[i], pipes[i + 1], av[i_cmd], envp);
+		i++;
+		i_cmd++;
+	}
+	last_pid = last_child_action(pipes[i], ac - 2, av, envp);
+	close_pipes(&pipes, ac - 4, -1);
+	wait_all(last_pid);
 	return (EXIT_SUCCESS);
 }

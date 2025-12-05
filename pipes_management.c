@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:29:30 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 11:30:09 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 17:07:11 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_pipes(int ***pipes, int nb_pipes)
 {
 	int	i;
 	int	j;
-	
+
 	*pipes = malloc(sizeof(int *) * nb_pipes);
 	if (!*pipes)
 		exit(EXIT_FAILURE);
@@ -43,9 +43,17 @@ void	close_pipes(int ***pipes, int nb_pipes, int pipe_to_keep)
 
 	i = -1;
 	while (++i < nb_pipes)
+	{
 		if (i != pipe_to_keep)
 		{
 			close((*pipes)[i][0]);
 			close((*pipes)[i][1]);
 		}
+	}
+}
+
+void	close_pipe(int **pipe)
+{
+	close((*pipe)[0]);
+	close((*pipe)[1]);
 }
