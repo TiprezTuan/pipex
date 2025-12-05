@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main_arg.h                                   :+:      :+:    :+:   */
+/*   pipex_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 10:53:01 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/04 10:53:28 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:25:55 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:40:12 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_MAIN_ARG_H
-# define PARSE_MAIN_ARG_H
+#ifndef PIPEX_UTILS_H
+# define PIPEX_UTILS_H
 
-char	*find_path(char **envp);
+void	free_split(char **split);
+void	free_result(char **result);
+void	free_split_and_exit(char **split_to_free);
+void	free_2_splits(char **a, char **b);
+void	free_2_splits_and_exit(char **a, char **b);
+
+int		print_error_and_exit(char *msg);
+void	perror_exit(char *perror_msg);
 
 #endif

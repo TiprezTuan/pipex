@@ -1,60 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 12:01:56 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 01:15:15 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:20:10 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <stdio.h>
+#include "pipex.h"
 #include "libft.h"
-#include "error_behaviors.h"
-#include "ft_quotes_respected_split.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-char	*find_cmd_path(char *cmd, char **splitted_path)
+char	*find_cmd_path(char **cmdargv, char **splitted_path)
 {
 	char	*cmd_path;
 	char	*tmp;
 	size_t	i;
 
-	if (!splitted_path)
-		exit (EXIT_FAILURE);
+	if (!cmdargv || !splitted_path)
+		free_2_splits_and_exit(cmdargv, splitted_path);
 	i = 0;
 	while (splitted_path[i])
 	{
 		tmp = ft_strjoin(splitted_path[i], "/");
 		if (!tmp)
-			return (free_split(splitted_path), NULL);
-		cmd_path = ft_strjoin(tmp, cmd);
-		if (!cmd_path)
-			return (free_split(splitted_path), free(tmp), NULL);
+			free_2_splits_and_exit(cmdargv, splitted_path);
+		cmd_path = ft_strjoin(tmp, cmdargv[0]);
 		free(tmp);
+		if (!cmd_path)
+			free_2_splits_and_exit(cmdargv, splitted_path);
 		if (access(cmd_path, X_OK) == 0)
-			return (free_split(splitted_path), cmd_path);
+			return (free_2_splits(cmdargv, splitted_path), cmd_path);
 		free(cmd_path);
 		i++;
 	}
-	return (free_split(splitted_path), NULL);
+	free_2_splits_and_exit(cmdargv, splitted_path);
+	return (NULL);
 }
 
-bool	command(char *cmd_path, char *cmd, char **envp)
+void	command(char *cmd_path, char *cmd, char **envp)
 {
-	char **splitted_cmd;
+	char	**splitted_cmd;
 
 	if (!cmd_path)
-		return (false);
+		exit(EXIT_FAILURE);
 	splitted_cmd = ft_quotes_respected_split(cmd, ' ');
 	if (!splitted_cmd)
-		return (false);
+	{
+		free(cmd_path);
+		exit(EXIT_FAILURE);
+	}
 	execve(cmd_path, splitted_cmd, envp);
-	free_split(splitted_cmd);
 	perror(cmd_path);
-	exit(EXIT_FAILURE);
+	free (cmd_path);
+	free_split_and_exit(splitted_cmd);
 }

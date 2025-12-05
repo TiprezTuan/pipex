@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_behaviors.c                                  :+:      :+:    :+:   */
+/*   memory_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 10:55:00 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 00:32:55 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:36:35 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:39:33 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "libft.h"
 
 void	free_split(char **split)
 {
@@ -27,20 +24,36 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	print_error_and_exit(char *msg)
+void	free_result(char **result)
 {
-	write(2, msg, ft_strlen(msg));
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-void	perror_exit(char *perror_msg)
-{
-	perror(perror_msg);
-	exit (EXIT_FAILURE);
+	i = -1;
+	while (result[++i])
+		free(result[i]);
+	free(result);
 }
 
 void	free_split_and_exit(char **split_to_free)
 {
-	free_split(split_to_free);
+	if (split_to_free)
+		free_split(split_to_free);
+	exit(EXIT_FAILURE);
+}
+
+void	free_2_splits(char **a, char **b)
+{
+	if (a)
+		free_split(a);
+	if (b)
+		free_split(b);
+}
+
+void	free_2_splits_and_exit(char **a, char **b)
+{
+	if (a)
+		free_split(a);
+	if (b)
+		free_split(b);
 	exit(EXIT_FAILURE);
 }

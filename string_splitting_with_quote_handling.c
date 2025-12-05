@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_quotes_respected_split.c                        :+:      :+:    :+:   */
+/*   string_splitting_with_quote_handling.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 00:55:06 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 05:23:56 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:33:13 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:23:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_quotes_respected_split.h"
+#include "pipex.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
-static char *remove_quotes(char *str)
+static char	*remove_quotes(char *str)
 {
-    char	*result;
+	char	*result;
+	char	current_quote;
 	int		j;
-    int		i;
-    char	current_quote;
+	int		i;
 
 	result = malloc(ft_strlen(str) + 1);
 	i = 0;
 	j = 0;
 	current_quote = 0;
-    while (str[i])
-    {
-        if (!current_quote && (str[i] == '"' || str[i] == '\''))
-            current_quote = str[i]; 
-        else if (current_quote && str[i] == current_quote)
-            current_quote = 0;
-        else
-            result[j++] = str[i];
-        i++;
-    }
-    result[j] = '\0';
-    return result;
+	while (str[i])
+	{
+		if (!current_quote && (str[i] == '"' || str[i] == '\''))
+			current_quote = str[i];
+		else if (current_quote && str[i] == current_quote)
+			current_quote = 0;
+		else
+			result[j++] = str[i];
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
 }
 
 static int	extract_word(char **res, char *str, char c, int *end)
@@ -54,6 +55,8 @@ static int	extract_word(char **res, char *str, char c, int *end)
 	}
 	*end = i;
 	*res = ft_strndup(str + start, i - start);
+	if (!res)
+		return (0);
 	*res = remove_quotes(*res);
 	if (!*res)
 		return (0);

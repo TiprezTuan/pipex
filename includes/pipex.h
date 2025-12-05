@@ -6,17 +6,15 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 05:07:38 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 00:25:16 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/05 11:24:38 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <stdbool.h>
-
-bool	write_pipe_in_fd(char *filename, int pipefd[2]);
-bool	child2_action(char **argv, int pipefd[2]);
-void	first_child_action(int *pipefd, char *patch, char **argv, char **envp);
+# include "pipex_process.h"
+# include "pipex_parsing.h"
+# include "pipex_utils.h"
 
 #endif

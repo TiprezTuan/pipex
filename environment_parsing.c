@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main_arg.c                                   :+:      :+:    :+:   */
+/*   environment_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 10:49:25 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/04 12:17:06 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:30:54 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:20:31 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
 #include "libft.h"
-#include <stdlib.h>
+#include <stddef.h>
 
 char	*find_path(char **envp)
 {

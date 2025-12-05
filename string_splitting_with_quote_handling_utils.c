@@ -1,15 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_quotes_respected_split_utils.c                  :+:      :+:    :+:   */
+/*   string_splitting_with_quote_handling_utils.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 00:55:46 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 04:58:50 by ttiprez          ###   ########.fr       */
+/*   Created: 2025/12/05 11:35:03 by ttiprez           #+#    #+#             */
+/*   Updated: 2025/12/05 13:23:03 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pipex.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -42,16 +44,6 @@ char	*ft_strndup(const char *src, unsigned int size)
 		dup_str[i] = src[i];
 	dup_str[i] = '\0';
 	return (dup_str);
-}
-
-void	free_result(char **result)
-{
-	int	i;
-
-	i = -1;
-	while (result[++i])
-		free(result[i]);
-	free(result);
 }
 
 bool	isquote(char quote, char c, bool check_both)

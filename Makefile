@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 17:58:06 by ttiprez           #+#    #+#              #
-#    Updated: 2025/12/05 01:16:22 by ttiprez          ###   ########.fr        #
+#    Updated: 2025/12/05 13:26:50 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ CFLAGS		= -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT
 NAME		= pipex
 
 # Fichiers sources & objets
-SRCS		= main.c pipex.c parse_main_arg.c error_behaviors.c command.c ft_quotes_respected_split.c ft_quotes_respected_split_utils.c
+SRCS		= pipex.c child_process_management.c command_execution.c environment_parsing.c error_handling.c memory_management.c pipes_management.c string_splitting_with_quote_handling.c string_splitting_with_quote_handling_utils.c
 OBJS		= $(SRCS:.c=.o)
 
 # Headers
 HEADERS_DIR	= includes
-HEADERS		= $(HEADERS_DIR)/pipex.h $(HEADERS_DIR)/parse_main_arg.h $(HEADERS_DIR)/error_behaviors.h $(HEADERS_DIR)/command.h $(HEADERS_DIR)/ft_quotes_respected_split.h
+HEADERS		= $(HEADERS_DIR)/pipex.h $(HEADERS_DIR)/child_process_management.h $(HEADERS_DIR)/command_execution.h $(HEADERS_DIR)/environment_parsing.h $(HEADERS_DIR)/error_handling.h $(HEADERS_DIR)/memory_management.h $(HEADERS_DIR)/pipes_management.h $(HEADERS_DIR)/string_splitting_with_quote_handling.h $(HEADERS_DIR)/string_splitting_with_quote_handling_utils.h
 
 # ft_printf
 PRINTF_DIR	= ft_printf
@@ -35,7 +35,7 @@ PRINTF		= $(PRINTF_DIR)/libftprintf.a
 # libft
 LIBFT_DIR	= $(PRINTF_DIR)/libft
 
-# Couleurs
+# Couleur
 RED			= \033[0;31m
 GREEN		=\033[0;32m
 CYAN		=\033[0;36m
