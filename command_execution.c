@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 17:15:06 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/06 16:48:23 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-char	*find_cmd_path(char **cmdargv, char **splitted_path)
+static void	print_err_free_splits_exit(char *err_msg, char **s1, char **s2)
+{
+	ft_putstr_fd(err_msg, 2);
+	ft_putendl_fd(": command not found", 2);
+	free_2_splits_and_exit(s1, s2);
+}
+
+char	*loop_find_cmd_path(char **cmdargv, char **splitted_path)
 {
 	char	*cmd_path;
 	char	*tmp;
 	size_t	i;
 
-	if (!cmdargv || !splitted_path)
-		free_2_splits_and_exit(cmdargv, splitted_path);
-	i = 0;
-	while (splitted_path[i])
+	i = -1;
+	while (splitted_path[++i])
 	{
 		tmp = ft_strjoin(splitted_path[i], "/");
 		if (!tmp)
@@ -37,13 +42,22 @@ char	*find_cmd_path(char **cmdargv, char **splitted_path)
 		if (access(cmd_path, X_OK) == 0)
 			return (free_2_splits(cmdargv, splitted_path), cmd_path);
 		free(cmd_path);
-		i++;
 	}
-	free_2_splits_and_exit(cmdargv, splitted_path);
+	print_err_free_splits_exit(cmdargv[0], cmdargv, splitted_path);
 	return (NULL);
 }
 
-#include "ft_printf.h"
+char	*find_cmd_path(char **cmdargv, char **splitted_path)
+{
+	if (!cmdargv)
+		free_2_splits_and_exit(cmdargv, splitted_path);
+	if (ft_strchr(cmdargv[0], '/'))
+		if (access(cmdargv[0], X_OK) == 0)
+			return (ft_strdup(cmdargv[0]));
+	if (!splitted_path)
+		print_err_free_splits_exit(cmdargv[0], cmdargv, splitted_path);
+	return (loop_find_cmd_path(cmdargv, splitted_path));
+}
 
 void	command(char *cmd_path, char *cmd, char **envp)
 {
