@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:33:13 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 16:53:11 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 17:54:13 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static char	*remove_quotes(char *str)
 
 static int	extract_word(char **res, char *str, char c, int *end)
 {
-	int	i;
-	int	start;
+	int		i;
+	int		start;
+	char	*tmp;
 
 	start = *end;
 	i = start;
@@ -57,7 +58,9 @@ static int	extract_word(char **res, char *str, char c, int *end)
 	*res = ft_strndup(str + start, i - start);
 	if (!res)
 		return (0);
+	tmp = *res;
 	*res = remove_quotes(*res);
+	free(tmp);
 	if (!*res)
 		return (0);
 	return (1);

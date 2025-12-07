@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 15:16:17 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 17:02:57 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 18:58:56 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ static void	read_stdin(int fd, char *eof)
 		write(fd, buf, nb_read);
 	}
 	close(fd);
+	free(other_eof);
 }
 
-int	handle_heredoc(int ac, char **av)
+int	handle_heredoc(char **av)
 {
 	int	fd;
 
 	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
-		if (ac < 6)
-			print_error_and_exit("Wrong numbers of arguments (minimum 6)\n");
 		fd = open("/tmp/.pipex_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd < 0)
 			perror_exit("/tmp/.pipex_heredoc");

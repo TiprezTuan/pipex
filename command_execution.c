@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 14:54:27 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 18:52:41 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,17 @@ char	*loop_find_cmd_path(char **cmdargv, char **splitted_path)
 	return (NULL);
 }
 
-char	*find_cmd_path(char **cmdargv, char **splitted_path)
+char	*find_cmd_path(char *cmd, char **splitted_path)
 {
+	char **cmdargv;
+
+	if (ft_strcmp(cmd, "") == 0)
+	{
+		free_split(splitted_path);
+		print_error_and_exit("", ": command not found");
+	}
+	else
+		cmdargv = ft_split(cmd, ' ');
 	if (!cmdargv)
 		free_2_splits_and_exit(cmdargv, splitted_path);
 	if (ft_strchr(cmdargv[0], '/'))

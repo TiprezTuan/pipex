@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:26:34 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 17:07:44 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 18:52:29 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ static bool	is_heredoc(char **av)
 	return (false);
 }
 
-void	wait_all(pid_t last_pid)
+int	wait_all(pid_t last_pid)
 {
-	waitpid(last_pid, 0, 0);
+	int	status;
+	int	status_code;
+
+	waitpid(last_pid, &status, 0);
+	if (WIFEXITED(status))
+		status_code = WEXITSTATUS(status);
 	while (wait(NULL) > 0)
 		;
+	return (status_code);
 }
 
 void	first_child_action(int *pipefd, int ac, char **av, char **envp)
@@ -51,7 +57,7 @@ void	first_child_action(int *pipefd, int ac, char **av, char **envp)
 		dup2(pipefd[1], STDOUT_FILENO);
 		close_pipe(&pipefd);
 		close(input_fd);
-		cmd_path = find_cmd_path(ft_split(av[2 + skip_heredoc], ' '),
+		cmd_path = find_cmd_path(av[2 + skip_heredoc],
 				ft_split(path, ':'));
 		command(cmd_path, av[2 + skip_heredoc], envp);
 	}
@@ -75,7 +81,7 @@ pid_t	mid_child_action(int *pipe_in, int *pipe_out, char *cmd, char **envp)
 		dup2(pipe_out[1], STDOUT_FILENO);
 		close_pipe(&pipe_in);
 		close_pipe(&pipe_out);
-		cmd_path = find_cmd_path(ft_split(cmd, ' '), ft_split(path, ':'));
+		cmd_path = find_cmd_path(cmd, ft_split(path, ':'));
 		command(cmd_path, cmd, envp);
 	}
 	else
@@ -106,7 +112,7 @@ pid_t	last_child_action(int *pipe_in, int ac, char **argv, char **envp)
 		dup2(output_fd, STDOUT_FILENO);
 		close_pipe(&pipe_in);
 		close(output_fd);
-		cmd_path = find_cmd_path(ft_split(argv[ac], ' '), ft_split(path, ':'));
+		cmd_path = find_cmd_path(argv[ac], ft_split(path, ':'));
 		command(cmd_path, argv[ac], envp);
 	}
 	return (close_pipe(&pipe_in), child);
