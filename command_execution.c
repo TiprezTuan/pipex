@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 18:52:41 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 19:06:18 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*loop_find_cmd_path(char **cmdargv, char **splitted_path)
 
 char	*find_cmd_path(char *cmd, char **splitted_path)
 {
-	char **cmdargv;
+	char	**cmdargv;
 
 	if (ft_strcmp(cmd, "") == 0)
 	{

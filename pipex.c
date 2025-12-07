@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 13:21:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 18:57:47 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 19:06:53 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-static void check_ac(int ac, char **av)
+static void	check_ac(int ac, char **av)
 {
 	if (ac < 5)
 		print_error_and_exit("Error", ": wrong number of arguments");

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 15:16:17 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/07 18:58:56 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 19:06:40 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	read_stdin(int fd, char *eof)
 	{
 		nb_read = read(0, buf, sizeof(buf) - 1);
 		if (nb_read <= 0)
-			break;
+			break ;
 		buf[nb_read] = 0;
 		if (ft_strcmp(buf, eof) == 0 || ft_strcmp(buf, other_eof) == 0)
-			break;
+			break ;
 		write(fd, buf, nb_read);
 	}
 	close(fd);
