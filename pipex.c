@@ -6,11 +6,12 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 13:21:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/06 16:28:10 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 15:06:36 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,26 +22,24 @@
 int	main(int ac, char **av, char **envp)
 {
 	pid_t	last_pid;
-	char	*path;
 	int		i_cmd;
 	int		i;
+	int		nb_cmd;
 	int		**pipes;
 
-	init_pipes(&pipes, ac - 3 - 1);
-	path = find_path(envp);
-	if (ac < 5)
-		print_error_and_exit("Wrong numbers of arguments(Minimum 5)\n");
-	first_child_action(pipes[0], av, envp);
-	i_cmd = 3;
+	f = get_filename(av, ac, &nb_cmd);
+	init_pipes(&pipes, ac - nb_cmd - 1);
+	first_child_action(pipes[0], f, av[ac - nb_cmd], envp);
+	i_cmd = 0;
 	i = 0;
-	while (i_cmd < ac - 2)
+	while (i_cmd < nb_cmd - 1)
 	{
 		last_pid = mid_child_action(pipes[i], pipes[i + 1], av[i_cmd], envp);
 		i++;
 		i_cmd++;
 	}
 	last_pid = last_child_action(pipes[i], ac - 2, av, envp);
-	close_pipes(&pipes, ac - 4, -1);
+	close_pipes_and_free(&pipes, ac - 4);
 	wait_all(last_pid);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:28:36 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/06 16:48:23 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 14:54:27 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ char	*find_cmd_path(char **cmdargv, char **splitted_path)
 	return (loop_find_cmd_path(cmdargv, splitted_path));
 }
 
-void	command(char *cmd_path, char *cmd, char **envp)
+void	command(char *cmd_path, char *cmdargv, char **envp)
 {
 	char	**splitted_cmd;
 
 	if (!cmd_path)
 		exit(EXIT_FAILURE);
-	splitted_cmd = ft_quotes_respected_split(cmd, ' ');
+	splitted_cmd = ft_quotes_respected_split(cmdargv, ' ');
 	if (!splitted_cmd)
 	{
 		free(cmd_path);

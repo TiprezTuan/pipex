@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 17:58:06 by ttiprez           #+#    #+#              #
-#    Updated: 2025/12/05 13:26:50 by ttiprez          ###   ########.fr        #
+#    Updated: 2025/12/07 14:27:19 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ MAKEFLAGS += -s
 
 # Compilateur et flags
 CC			= cc
-CFLAGS		= -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
+CFLAGS		=  -Wall -Wextra -Werror -g -I$(HEADERS_DIR) -I$(PRINTF_DIR)/includes -I$(LIBFT_DIR)
 
 # Nom de l'executable
 NAME		= pipex

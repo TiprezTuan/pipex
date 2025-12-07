@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:29:30 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/05 17:07:11 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/07 14:31:28 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,18 @@ void	init_pipes(int ***pipes, int nb_pipes)
 	}
 }
 
-void	close_pipes(int ***pipes, int nb_pipes, int pipe_to_keep)
+void	close_pipes_and_free(int ***pipes, int nb_pipes)
 {
 	int	i;
 
 	i = -1;
 	while (++i < nb_pipes)
 	{
-		if (i != pipe_to_keep)
-		{
-			close((*pipes)[i][0]);
-			close((*pipes)[i][1]);
-		}
+		close((*pipes)[i][0]);
+		close((*pipes)[i][1]);
+		free((*pipes)[i]);
 	}
+	free(*pipes);
 }
 
 void	close_pipe(int **pipe)
