@@ -1,7 +1,0 @@
-Modifier first_child_process :
-	-> Modifiers paramètres, plus argv mis dedans mais un param file_name et un param cmdargv
-Gestion here_doc :
-	->strcmp(argv[1], "here_doc");
-	-> Vérifier que y'a au moins 6 argc
-	-> Lire l'entré de l'utilisateur
-	-> Utiliser gnl pour catch le EOF
