@@ -6,7 +6,7 @@
 /*   By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 19:50:19 by ttiprez           #+#    #+#             */
-/*   Updated: 2025/12/10 20:10:50 by ttiprez          ###   ########.fr       */
+/*   Updated: 2025/12/10 21:06:34 by ttiprez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	child_action(t_lstcmd *lst, t_lstcmd *cmd, int from, int to)
 {
 	pid_t	child;
 
+	if (from < 0)
+		return (close(from), close(to), 0);
 	child = fork();
 	if (child == -1)
 		return (close(from), close(to), perror("fork()"), false);
