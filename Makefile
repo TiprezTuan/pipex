@@ -6,7 +6,7 @@
 #    By: ttiprez <ttiprez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 17:58:06 by ttiprez           #+#    #+#              #
-#    Updated: 2025/12/10 20:12:00 by ttiprez          ###   ########.fr        #
+#    Updated: 2025/12/13 15:27:25 by ttiprez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ NAME		= pipex
 SRC_DIR		= src
 OBJ_DIR		= obj
 HEADERS_DIR	= include
-
+	
 # ft_printf
 PRINTF_DIR	= ft_printf
 PRINTF		= $(PRINTF_DIR)/libftprintf.a
